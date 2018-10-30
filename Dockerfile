@@ -8,6 +8,7 @@ RUN mkdir -p /mosquitto/certs
 COPY ./mosquitto.conf /mosquitto/config/mosquitto.conf
 COPY ./certs/ /mosquitto/certs/
 
-RUN chown -R mosquitto:mosquitto /mosquitto/
+RUN chmod 400 /mosquitto/certs/ca.crt /mosquitto/certs/server.key
+RUN chmod 444 /mosquitto/certs/server.crt
 
 CMD ["/usr/sbin/mosquitto", "-c", "/mosquitto/config/mosquitto.conf"]
