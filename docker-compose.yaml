@@ -1,0 +1,8 @@
+version: '2'
+services:
+    mqtt_server:
+        build: .
+        container_name: "mqtt_server"
+        ports:
+            - 8883:8883
+        restart: always
