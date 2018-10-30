@@ -21,6 +21,7 @@ Openssl is required to generate the certificates.
 To generate the certificate authority run:
 >openssl req -nodes -new -x509 -days 1000 -extensions v3_ca -keyout certs/ca.key -out certs/ca.crt
 <br />
+
 ### Generate the Server Certificates
 Generate the server key using:
 >openssl genrsa -out certs/server.key 2048
@@ -44,6 +45,7 @@ Send the CSR to the CA, or sign it with your CA key with:
 >openssl x509 -req -in certs/client.csr -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/client.crt -days 1000
 <br />
 <br />
+
 # Start up the MQTT server
 Once all the necessary certificates are generated and placed in `/certs` folder, in order to start the MQTT server execute the following line: 
 > docker-compose up
