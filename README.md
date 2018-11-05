@@ -5,20 +5,25 @@
 
 
 # Introduction
-This is an example to set up a secure MQTT server over TLS. The server runs encapsulated in a Docker container, and its launched using Docker compose.
+This is an example to set up a secure MQTT server over TLS. The server runs encapsulated in a Docker container, and its launched using Docker compose. THIS PROJECT IS FOR DEMO ONLY. DON'T USE THESE FILES IN A PRODUCTION ENVIRONMENT.
 <br />
 <br />
 
 # Installation
 In order to run this software, it is necessary to install Docker CE. [Find the instructions here.](https://docs.docker.com/install/) Also docker compose is required. [Install docker compose.](https://docs.docker.com/compose/install/)
+Also root access is needed to run docker binaries.
 <br />
 <br />
 
 # Generate the certificates
-Openssl is required to generate the certificates. 
+Openssl is required to generate the certificates. The private key files ( .key files in the certs folder) must be stored in a secure way, or the traffic could be sniffed.
 <br />
 
 ### Generate the Certificate Authority
+
+Create a new certs folder:
+>mkdir certs
+
 To generate the certificate authority run:
 >openssl req -nodes -new -x509 -days 1000 -extensions v3_ca -keyout certs/ca.key -out certs/ca.crt
 
@@ -50,7 +55,7 @@ Send the CSR to the CA, or sign it with your CA key with:
 <br />
 
 # Start up the MQTT server
-Once all the necessary certificates are generated and placed in `/certs` folder, in order to start the MQTT server execute the following line: 
+Once all the necessary certificates are generated copy the certs folder inside the cloned folder. In order to start the MQTT server execute the following line: 
 > docker-compose up
 
 To run the server in the background, just append a `-d` flag to the command:
@@ -74,3 +79,16 @@ Identify the containers you want to stop, and run:
 
 In case you want to stop and also delete a running container, execute: 
 >docker rm -f  7f6ecaf856f9
+
+<br />
+
+### Check logs of the mqtt server
+
+Inside the project there is a log folder with the mosquitto.log server, to see the logs run: 
+>sudo tail -f logs/mosquitto.log
+
+<br />
+
+### Connect to the mqtt server to see the messages
+
+To interact with the MQTT server, any MQTT client can be used. For instace the java client [MQTTfx](https://mqttfx.jensd.de/index.php/download). Remember to configure the client with the certificates generated in previous steps.
